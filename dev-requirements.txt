@@ -1,0 +1,15 @@
+# Build tasks
+invoke
+
+aiohttp
+
+# Testing
+pytest
+tox>=1.5.0
+
+# Packaging
+wheel
+twine
+
+# Syntax checking
+flake8==2.4.1
