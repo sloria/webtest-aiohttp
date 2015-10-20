@@ -23,14 +23,13 @@ webtest-aiohttp provides integration of WebTest with aiohttp.web applications
     loop = asyncio.get_event_loop()
     asyncio.set_event_loop(loop)
 
-
     app = web.Application(loop=loop)
 
     @asyncio.coroutine
     def hello(request):
         return web.Response(body=json.dumps(
             {'message': 'Hello world'}
-        ).encode('utf-8'), content_type='application/json; charset=utf-8')
+        ).encode('utf-8'), content_type='application/json')
 
     app.router.add_route('GET', '/', handler)
 
