@@ -48,7 +48,7 @@ def WSGIHandler(app):
         req = webob.Request(environ)
         vers = aiohttp.HttpVersion10 if req.http_version == 'HTTP/1.0' else aiohttp.HttpVersion11
         message = aiohttp.RawRequestMessage(
-            req.method, req.path_qs, vers, aiohttp.CIMultiDict(req.headers), False, False)
+            req.method, req.path_qs, vers, aiohttp.CIMultiDict(req.headers), False, False, False)
         payload = aiohttp.StreamReader(loop=loop)
         payload.feed_data(req.body)
         payload.feed_eof()
@@ -58,7 +58,9 @@ def WSGIHandler(app):
         handler.transport = io.BytesIO()
         handler.transport.is_closing = lambda: False
         handler.transport._conn_lost = 0
-        handler.transport.get_extra_info = lambda s: ('127.0.0.1', 80)
+        handler.transport.get_extra_info = lambda s: {
+            'peername': ('127.0.0.1', 80)
+        }.get(s)
         handler.writer = aiohttp.parsers.StreamWriter(
             handler.transport, handler, handler.reader, handler._loop)
         coro = handler.handle_request(message, payload)
