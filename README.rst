@@ -10,7 +10,9 @@ webtest-aiohttp
     :target: https://travis-ci.org/sloria/webtest-aiohttp
     :alt: Travis-CI
 
-webtest-aiohttp provides integration of WebTest with aiohttp.web applications
+webtest-aiohttp provides integration of WebTest with aiohttp.web applications.
+
+Supports aiohttp>=0.21.0.
 
 
 .. code-block:: python

@@ -35,7 +35,7 @@ import aiohttp
 import webob
 import webtest
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 # from https://github.com/klen/muffin/blob/develop/muffin/pytest.py
 def WSGIHandler(app):
