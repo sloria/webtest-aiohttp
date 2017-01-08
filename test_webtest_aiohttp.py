@@ -19,7 +19,7 @@ def app(loop):
     def handler(request):
         return web.Response(body=json.dumps(
             {'message': 'Hello world'}
-        ).encode('utf-8'), content_type='application/json; charset=utf-8')
+        ).encode('utf-8'), content_type='application/json', charset='utf8')
     app_ = web.Application(loop=loop)
 
     app_.router.add_route('GET', '/', handler)
