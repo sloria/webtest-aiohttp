@@ -42,7 +42,7 @@ from aiohttp.server import ServerHttpProtocol
 import webob
 import webtest
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 class RequestHandler(ServerHttpProtocol):
 
