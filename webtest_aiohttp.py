@@ -85,11 +85,18 @@ class RequestHandler(ServerHttpProtocol):
         if self.access_log:
             now = self._loop.time()
 
-        request = web_reqrep.Request(
-            message, payload,
-            self.transport, self.reader, self.writer,
-            self._time_service, task=None,
-            secure_proxy_ssl_header=self._secure_proxy_ssl_header)
+        try:
+            request = web_reqrep.Request(
+                message, payload,
+                self.transport, self.reader, self.writer,
+                self._time_service, task=None,
+                secure_proxy_ssl_header=self._secure_proxy_ssl_header)
+        except TypeError:  # no task argument in older versions of aiohttp
+            request = web_reqrep.Request(
+                message, payload,
+                self.transport, self.reader, self.writer,
+                self._time_service,
+                secure_proxy_ssl_header=self._secure_proxy_ssl_header)
         self._request = request
         try:
             match_info = yield from self._router.resolve(request)
