@@ -6,8 +6,15 @@ python:
   - "3.5"
   - "3.4"
 
+env:
+  # Lowest supported version
+  - AIOHTTP_VERSION="==1.1.6"
+  # Latest release
+  - AIOHTTP_VERSION=""
+
 install:
   - pip install -U .
   - pip install -U -r dev-requirements.txt
+  - travis_retry pip install -U aiohttp"$AIOHTTP_VERSION"
 
 script: invoke test
