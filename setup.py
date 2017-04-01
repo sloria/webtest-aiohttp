@@ -40,7 +40,7 @@ setup(
     url='https://github.com/sloria/webtest-aiohttp',
     py_modules=['webtest_aiohttp'],
     install_requires=REQUIRES,
-    license=read('LICENSE'),
+    license='MIT',
     zip_safe=False,
     keywords='webtest-aiohttp webtest aiohttp testing wsgi asyncio',
     classifiers=[
