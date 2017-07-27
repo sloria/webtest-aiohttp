@@ -33,7 +33,7 @@ import io
 
 import aiohttp
 from aiohttp import (
-    hdrs, web_reqrep, web_exceptions
+    hdrs, web, web_exceptions
 )
 from aiohttp.abc import AbstractMatchInfo
 from aiohttp.helpers import TimeService
@@ -86,13 +86,13 @@ class RequestHandler(ServerHttpProtocol):
             now = self._loop.time()
 
         try:
-            request = web_reqrep.Request(
+            request = web.Request(
                 message, payload,
                 self.transport, self.reader, self.writer,
                 self._time_service, task=None,
                 secure_proxy_ssl_header=self._secure_proxy_ssl_header)
         except TypeError:  # no task argument in older versions of aiohttp
-            request = web_reqrep.Request(
+            request = web.Request(
                 message, payload,
                 self.transport, self.reader, self.writer,
                 self._time_service,
@@ -118,7 +118,7 @@ class RequestHandler(ServerHttpProtocol):
                         handler = yield from factory(app, handler)
                 resp = yield from handler(request)
 
-            assert isinstance(resp, web_reqrep.StreamResponse), \
+            assert isinstance(resp, web.StreamResponse), \
                 ("Handler {!r} should return response instance, "
                  "got {!r} [middlewares {!r}]").format(
                      match_info.handler, type(resp), self._middlewares)
