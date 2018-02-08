@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 webtest-aiohttp provides integration of WebTest with aiohttp.web applications
 
