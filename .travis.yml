@@ -3,19 +3,38 @@ language: python
 sudo: false
 
 python:
-  - "3.6"
-  - "3.5"
-  - "3.4"
+- "3.6"
+- "3.5"
+- "3.4"
 
 env:
-  # Lowest supported version
-  - AIOHTTP_VERSION="==1.1.6"
-  # Latest release
-  - AIOHTTP_VERSION=""
+# Lowest supported version
+- AIOHTTP_VERSION="==1.1.6"
+# Latest release
+- AIOHTTP_VERSION=""
 
 install:
-  - pip install -U .
-  - pip install -U -r dev-requirements.txt
-  - travis_retry pip install -U aiohttp"$AIOHTTP_VERSION"
+- pip install -U .
+- travis_retry pip install -U -r dev-requirements.txt
+- travis_retry pip install -U aiohttp"$AIOHTTP_VERSION"
 
 script: invoke test
+
+jobs:
+  include:
+  - stage: PyPI Release
+    if: tag IS present
+    python: "3.6"
+    env: []
+    # Override install and script to no-ops
+    install: true
+    script: echo "Releasing to PyPI..."
+    after_success: true
+    deploy:
+      provider: pypi
+      user: sloria
+      on:
+        tags: true
+      distributions: sdist bdist_wheel
+      password:
+        secure: Js4y4rFUOWv7+xCoj8JjpPySZdgtg+yhqo/4MaHVvG+brphrOd7a69sMadG//0x4PFMUDSGik5LIpCWwJskN21E+6ayzWOdmwU4XINBVuXfdcsdS4KTW0id+KWCWwZ70z+PxYkC7ElTyovX0/59K/CbADCA+M4NhNWAYwbZN0tHa9o4SQSJBTdN8li16OSjM5te080JcWTsBHJMTl7Quwd36yIIBbeyuVGs00lBw5GRn29juu0SGjgVS5FApU9Au07/SbMR1QV2tNGSyKTJUh1PcokTGvjAQNk2TSfYGb20MqYpmc46XvDykyL3mhtjCAxsxnCfOXTZZZAMqkNZEMcuGyUBJv3hCKWrjC+PZwHCmWZG+DzdrIzdHDoAlJuSa127E7vdRJ9e6JxurSvNO6gDOrzTgL+GtMHTM7yLC3Ncc35XCprX770UKYXDSEHWqyLEPQS3bWNmoILCQRvAP8aSi7B5dqCjKJm6/PzhOMrgK4e6eoOTNHOEZS7/e/QhN+FcscGXVQoKV/RJseII4+WqeTVjsk6MHIFnM5b7mNnkGhkAo+euZz3h62skeFrfqerQqLf6rJ4+XAqDpDS4x+DwGSYeanTvH7GNMC6qQ0cIEm93CXjgBAhCH/rov4rnGaNYYQb+/yvet4+565jfunoNVO4IM0k+6kQHXAIcfSKk=

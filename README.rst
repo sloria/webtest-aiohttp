@@ -2,11 +2,11 @@
 webtest-aiohttp
 ***************
 
-.. image:: https://badge.fury.io/py/webtest-aiohttp.png
+.. image:: https://badge.fury.io/py/webtest-aiohttp.svg
     :target: http://badge.fury.io/py/webtest-aiohttp
     :alt: Latest version
 
-.. image:: https://travis-ci.org/sloria/webtest-aiohttp.png
+.. image:: https://travis-ci.org/sloria/webtest-aiohttp.svg
     :target: https://travis-ci.org/sloria/webtest-aiohttp
     :alt: Travis-CI
 
