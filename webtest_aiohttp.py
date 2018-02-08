@@ -33,7 +33,7 @@ import aiohttp
 import webob
 import webtest
 
-__version__ = '1.1.1'
+__version__ = '2.0.0'
 
 def WSGIHandler(app, loop):
     """Return a wsgi application given an `aiohttp.web.Application`."""

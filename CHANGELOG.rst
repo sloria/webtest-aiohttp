@@ -2,6 +2,13 @@
 Changelog
 *********
 
+2.0.0 (2018-02-07)
+==================
+
+* Fix compatiblity with aiohttp>=2.3.8.
+* Drop compatibility with aiohttp 1. You must install an older version
+  of webtest-aiohttp for aiohttp 1 compat.
+
 1.1.1 (2017-01-08)
 ==================
 
