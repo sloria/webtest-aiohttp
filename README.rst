@@ -12,32 +12,22 @@ webtest-aiohttp
 
 webtest-aiohttp provides integration of WebTest with aiohttp.web applications.
 
-Supports aiohttp>=0.21.0.
-
+Supports aiohttp>=2.3.8.
 
 .. code-block:: python
-
-    import asyncio
 
     from aiohttp import web
     from webtest_aiohttp import TestApp
 
-    loop = asyncio.get_event_loop()
-    asyncio.set_event_loop(loop)
+    app = web.Application()
 
-    app = web.Application(loop=loop)
-
-    @asyncio.coroutine
-    def hello(request):
-        return web.Response(body=json.dumps(
-            {'message': 'Hello world'}
-        ).encode('utf-8'), content_type='application/json')
+    async def hello(request):
+        return web.json_response({'message': 'Hello world'})
 
     app.router.add_route('GET', '/', handler)
 
-
-    def test_hello():
-        client = TestApp(app)
+    def test_hello(loop):
+        client = TestApp(app, loop=loop)
         res = client.get('/')
         assert res.status_code == 200
         assert res.json == {'message': 'Hello world'}
@@ -48,16 +38,45 @@ Installation
 
     pip install webtest-aiohttp
 
+
+**Note: If you are using aiohttp<2.0.0, you will need to install webtest-aiohttp 1.x.**
+
+::
+
+    pip install 'webtest-aiohttp<2.0.0'
+
+
+Usage with pytest
+=================
+
+If you are using pytest and pytest-aiohttp, you can make your tests more
+concise with a fixture.
+
+
+.. code-block:: python
+
+    from aiohttp import web
+    from webtest_aiohttp import TestApp as WebTestApp
+
+    app = web.Application()
+
+    async def hello(request):
+        return web.json_response({'message': 'Hello world'})
+
+    app.router.add_route('GET', '/', handler)
+
+    @pytest.fixture()
+    def testapp(loop):
+        return WebTestApp(app, loop=loop)
+
+    def test_get(testapp):
+        assert testapp.get('/').json == {'message': 'Hello world'}
+
 Project Links
 =============
 
 - PyPI: https://pypi.python.org/pypi/webtest-aiohttp
 - Issues: https://github.com/sloria/webtest-aiohttp/issues
-
-Credits
-=======
-
-This code was adapted from Kirill Klenov's `muffin <https://github.com/klen/muffin>`_ library.
 
 License
 =======

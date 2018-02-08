@@ -9,7 +9,7 @@ python:
 
 env:
 # Lowest supported version
-- AIOHTTP_VERSION="==1.1.6"
+- AIOHTTP_VERSION="==2.3.8"
 # Latest release
 - AIOHTTP_VERSION=""
 
