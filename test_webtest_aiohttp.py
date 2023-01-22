@@ -10,26 +10,21 @@ from webtest_aiohttp import TestApp as WebTestApp
 
 @pytest.fixture()
 def app():
-    @asyncio.coroutine
-    def handler(request):
+    async def handler(request):
         return json_response({'message': 'Hello world'})
 
-    @asyncio.coroutine
-    def echo_post(request):
-        form_body = yield from request.post()
+    async def echo_post(request):
+        form_body = await request.post()
         return json_response(dict(form_body))
 
-    @asyncio.coroutine
-    def echo_json(request):
-        json_body = yield from request.json()
+    async def echo_json(request):
+        json_body = await request.json()
         return json_response(json_body)
 
-    @asyncio.coroutine
-    def echo_headers(request):
+    async def echo_headers(request):
         return json_response(dict(request.headers))
 
-    @asyncio.coroutine
-    def echo_params(request):
+    async def echo_params(request):
         return json_response(dict(request.query))
 
     app_ = web.Application()
